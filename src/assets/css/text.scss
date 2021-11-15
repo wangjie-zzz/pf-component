@@ -1,0 +1,30 @@
+.#{$prefix} {
+  @for $i from 5 through 19 {
+    &-fs-#{$i} {
+      font-size: $i * 1px !important;
+    }
+    &-lh-#{$i * 10} {
+      line-height: $i * 1px !important;
+    }
+  }
+  @for $i from 2 through 8 {
+    &-fs-#{$i * 10} {
+      font-size: $i * 10px !important;
+    }
+    &-lh-#{$i * 10} {
+      line-height: $i * 10px !important;
+    }
+  }
+  &-text-center{
+    text-align: center;
+  }
+  &-text-right{
+    text-align: right;
+  }
+  &-vertical-middle{
+    vertical-align: middle;
+  }
+  &-nowrap {
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,72 @@
+@import "var";
+@import "size";
+@import "text";
+@import "space";
+@import "common";
+
+.el-tabs__header {
+  margin: 0;
+  position: relative;
+  padding: 0;
+}
+.el-tabs__nav-wrap {
+  overflow: hidden;
+  margin-bottom: -1px;
+  position: relative;
+  padding: 0 0 0 15px;
+}
+.el-tabs__nav-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #E4E7ED;
+  z-index: -1;
+}
+.el-tabs__nav {
+  white-space: nowrap;
+  position: relative;
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+  transition: transform .3s,-webkit-transform .3s;
+  float: left;
+  z-index: 0;
+}
+.el-input-number .el-input__inner {
+  -webkit-appearance: none;
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: left;
+}
+/*------滚动条优化start-------*/
+/*整体部分*/
+::-webkit-scrollbar
+{
+  width: 10px;
+  height: 10px;
+}
+/*滑动轨道*/
+::-webkit-scrollbar-track
+{
+  border-radius: 0px;
+  background: none;
+}
+/*滑块*/
+::-webkit-scrollbar-thumb
+{
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+  background-color: rgba(255,255,255,.75)
+}
+/*滑块效果*/
+::-webkit-scrollbar-thumb:hover
+{
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
+  background-color: rgba(85, 85, 85, 0.4);
+}
+/*------滚动条优化end-------*/

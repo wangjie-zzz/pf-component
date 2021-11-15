@@ -1,0 +1,20 @@
+@for $i from 0 through 20 {
+  .#{$prefix}-h-#{$i * 5} {
+    height: $i * 5% !important;
+  }
+  .#{$prefix}-min-h-#{$i * 5} {
+    min-height: $i * 5% !important;
+  }
+  .#{$prefix}-max-h-#{$i * 5} {
+    max-height: $i * 5% !important;
+  }
+  .#{$prefix}-w-#{$i * 5} {
+    width: $i * 5% !important;
+  }
+  .#{$prefix}-min-w-#{$i * 5} {
+    min-width: $i * 5% !important;
+  }
+  .#{$prefix}-max-w-#{$i * 5} {
+    max-width: $i * 5% !important;
+  }
+}
