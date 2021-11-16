@@ -237,8 +237,8 @@ import debounce from "lodash/debounce";
 import useUtils from "./table/utils-helper";
 import useStyle from "./table/style-helper";
 import { Table } from "./table.type";
-import {TableModel} from "../../src/model/entity/TabelModel";
-import {useDict} from "../../src/constants/util/dict-convert";
+import {TableModel} from "../../src/components/model/TabelModel";
+import {useDict} from "../../src/components/util/dict-convert";
 // import ElTableColumn from "@/components/table/table-column/index"
 let tableIdSeed = 1;
 export default defineComponent({

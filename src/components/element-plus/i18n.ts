@@ -1,9 +1,9 @@
 import zhLocale from "element-plus/lib/locale/lang/zh-cn";
-import ElementLocale from "element-plus/lib/locale";
+import { i18n } from "element-plus/lib/locale";
 import { locale } from "element-plus";
 import { createI18n } from "vue-i18n";
 import { App } from "vue";
-export function i18n(app: App): App {
+export function i18nInstall(app: App): App {
   // 设置语言
   const messages = {
     [zhLocale.name]: {
@@ -14,12 +14,12 @@ export function i18n(app: App): App {
     }
   };
   locale(zhLocale);
-  const i18n = createI18n({
+  const vuei18n = createI18n({
     locale: zhLocale.name,
     fallbackLocale: zhLocale.name,
     messages
   });
-  app.use(i18n);
-  ElementLocale.i18n(i18n.global.t);
+  app.use(vuei18n);
+  i18n(vuei18n.global.t);
   return app;
 }

@@ -1,11 +1,11 @@
 {
   "name": "dcms-ui",
   "version": "0.1.0",
-  "private": true,
+  "main": "lib/index.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
     "build": "vue-cli-service build --mode prod",
-    "build:lib": "vue-cli-service build --target lib --name Pf --dest lib --filename index ./packages/index.ts",
+    "build:lib": "vue-cli-service build --target lib --name Pf --dest lib --filename index src/components/index.ts",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -40,5 +40,8 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "async-validator": "^3.4.0"
-  }
+  },
+  "files": [
+    "lib"
+  ]
 }

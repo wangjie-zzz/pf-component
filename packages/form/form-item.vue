@@ -297,7 +297,6 @@ export default defineComponent({
 
     const addValidateEvents = () => {
       const rules = getRules()
-
       if (rules.length || props.required !== undefined) {
         formItemMitt.on('el.form.blur', onFieldBlur)
         formItemMitt.on('el.form.change', onFieldChange)

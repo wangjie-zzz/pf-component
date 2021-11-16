@@ -213,9 +213,9 @@ import { defineComponent, provide, watch, ref, computed, reactive, toRefs, toRef
 import mitt from "mitt";
 import { elFormKey, ElFormItemContext as FormItemCtx, elFormEvents, ValidateFieldCallback, ComponentSize } from "./token";
 import { FieldErrorList } from "async-validator";
-import { FormModel, FormTypeEnum } from "../../src/model/entity/FormModel";
+import { FormModel, FormTypeEnum } from "../../src/components/model/FormModel";
 import ElFormItem from "./form-item.vue";
-import { useDict } from "../../src/constants/util/dict-convert";
+import { useDict } from "../../src/components/util/dict-convert";
 
 function useFormLabelWidth() {
   const potentialLabelWidthArr: any = ref([]);
