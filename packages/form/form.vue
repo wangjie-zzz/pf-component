@@ -290,7 +290,6 @@ export default defineComponent({
 
     formMitt.on<FormItemCtx>(elFormEvents.addField, field => {
       if (field) {
-        console.log(field);
         fields.push(field);
       }
     });

@@ -1,6 +1,7 @@
 import { RuleItem } from "async-validator";
 import { isNull } from "../../util/objects-utils";
 import { DictNameEnum } from "./Entity/SysDict";
+import { useDict } from "../../util/dict-convert";
 
 export const FormTypeEnum = {
   INPUT: { code: 1, name: "输入框" },
@@ -245,7 +246,7 @@ export class FormFieldModel {
     this.type = param.type || FormTypeEnum.INPUT.code;
     this.dict = param.dict;
     this.value = param.value;
-    this.options = !isNull(param.options) ? param.options : [];
+    this.options = !isNull(param.options) ? param.options : this.dict ? useDict().convertOptions(this.dict) : [];
     this.required = param.required;
     this.showMessage = param.showMessage;
     this.inlineMessage = param.inlineMessage;
