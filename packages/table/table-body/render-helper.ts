@@ -111,6 +111,7 @@ function useRender(props: TableBodyProps) {
           h(
             "tr",
             {
+              // @ts-ignore
               key: "expanded-row__" + tr.key
             },
             [

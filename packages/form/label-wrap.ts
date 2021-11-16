@@ -1,7 +1,7 @@
 import { defineComponent, h, inject, ref, watch, onMounted, onUpdated, onBeforeUnmount, nextTick, Fragment } from "vue";
 
 import { elFormKey, elFormItemKey } from "./token";
-import { addResizeListener, removeResizeListener, ResizableElement } from "element-plus/lib/utils/resize-event";
+import { addResizeListener, removeResizeListener } from "element-plus/lib/utils/resize-event.js";
 import { Nullable } from "./token";
 
 export default defineComponent({
@@ -45,7 +45,7 @@ export default defineComponent({
     const updateLabelWidthFn = () => updateLabelWidth("update");
 
     onMounted(() => {
-      addResizeListener(el.value?.firstElementChild as ResizableElement, updateLabelWidthFn);
+      addResizeListener(el.value?.firstElementChild, updateLabelWidthFn);
       updateLabelWidthFn();
     });
 
@@ -53,7 +53,7 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       updateLabelWidth("remove");
-      removeResizeListener(el.value?.firstElementChild as ResizableElement, updateLabelWidthFn);
+      removeResizeListener(el.value?.firstElementChild, updateLabelWidthFn);
     });
 
     function render() {
