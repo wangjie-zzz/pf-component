@@ -1,6 +1,6 @@
 {
   "name": "pf-component",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "lib/index.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
