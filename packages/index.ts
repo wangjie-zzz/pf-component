@@ -9,10 +9,10 @@ import { useDict } from "@/components/util/dict-convert";
 
 export default {
   install(
-      app: App,
-      ops: {
-        dicts: SysDict[];
-      }
+    app: App,
+    ops: {
+      dicts: SysDict[];
+    }
   ): void {
     if (!isNull(ops?.dicts)) {
       useDict().setDict(ops.dicts);

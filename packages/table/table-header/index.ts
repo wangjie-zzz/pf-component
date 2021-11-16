@@ -102,61 +102,63 @@ export default defineComponent({
                 style: this.getHeaderRowStyle(rowIndex)
               },
               subColumns.map((column: TableColumnCtx, cellIndex: number) =>
-                  h(
-                      "th",
+                h(
+                  "th",
+                  {
+                    class: this.getHeaderCellClass(rowIndex, cellIndex, subColumns, column),
+                    colspan: column.colSpan,
+                    key: `${column.id}-thead`,
+                    rowSpan: column.rowSpan,
+                    style: this.getHeaderCellStyle(rowIndex, cellIndex, subColumns, column),
+                    onClick: ($event: Event) => this.handleHeaderClick($event, column),
+                    onContextmenu: ($event: Event) => this.handleHeaderContextMenu($event, column),
+                    onMousedown: ($event: MouseEvent) => this.handleMouseDown($event, column),
+                    onMouseMove: ($event: MouseEvent) => this.handleMouseMove($event, column),
+                    onMouseout: this.handleMouseOut
+                  },
+                  [
+                    h(
+                      "div",
                       {
-                          class: this.getHeaderCellClass(rowIndex, cellIndex, subColumns, column),
-                          colspan: column.colSpan,
-                          key: `${column.id}-thead`,
-                          rowSpan: column.rowSpan,
-                          style: this.getHeaderCellStyle(rowIndex, cellIndex, subColumns, column),
-                          onClick: ($event: Event) => this.handleHeaderClick($event, column),
-                          onContextmenu: ($event: Event) => this.handleHeaderContextMenu($event, column),
-                          onMousedown: ($event: MouseEvent) => this.handleMouseDown($event, column),
-                          onMouseMove: ($event: MouseEvent) => this.handleMouseMove($event, column),
-                          onMouseout: this.handleMouseOut
+                        class: ["cell", column.filteredValue && column.filteredValue.length > 0 ? "highlight" : "", column.labelClassName]
                       },
                       [
+                        column.renderHeader ? column.renderHeader({ column, $index: cellIndex, store: this.store, _self: this.$parent }) : column.label,
+                        column.sortable &&
                           h(
-                              "div",
-                              {
-                                  class: ["cell", column.filteredValue && column.filteredValue.length > 0 ? "highlight" : "", column.labelClassName]
-                              },
-                              [
-                                  column.renderHeader ? column.renderHeader({ column, $index: cellIndex, store: this.store, _self: this.$parent }) : column.label,
-                                  column.sortable &&
-                                  h(
-                                      "span",
-                                      {
-                                          // @ts-ignore
-                                          onClick: ($event: Event) => this.handleSortClick($event, column),
-                                          class: "caret-wrapper"
-                                      },
-                                      [
-                                          h("i", {
-                                              onClick: ($event: Event) => this.handleSortClick($event, column, "ascending"),
-                                              class: "sort-caret ascending"
-                                          }),
-                                          h("i", {
-                                              onClick: ($event: Event) => this.handleSortClick($event, column, "descending"),
-                                              class: "sort-caret descending"
-                                          })
-                                      ]
-                                  ),
-                                  column.filterable &&
-                                  h(FilterPanel, {
-                                      store: (this.$parent as any)?.store,
-                                      placement: column.filterPlacement || "bottom-start",
-                                      column: column,
-                                      upDataColumn: (key: string | number, value: any) => {
-                                          // @ts-ignore
-                                          column[key] = value;
-                                      }
-                                  })
-                              ]
-                          )
+                            "span",
+                            {
+                              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                              // @ts-ignore
+                              onClick: ($event: Event) => this.handleSortClick($event, column),
+                              class: "caret-wrapper"
+                            },
+                            [
+                              h("i", {
+                                onClick: ($event: Event) => this.handleSortClick($event, column, "ascending"),
+                                class: "sort-caret ascending"
+                              }),
+                              h("i", {
+                                onClick: ($event: Event) => this.handleSortClick($event, column, "descending"),
+                                class: "sort-caret descending"
+                              })
+                            ]
+                          ),
+                        column.filterable &&
+                          h(FilterPanel, {
+                            store: (this.$parent as any)?.store,
+                            placement: column.filterPlacement || "bottom-start",
+                            column: column,
+                            upDataColumn: (key: string | number, value: any) => {
+                              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                              // @ts-ignore
+                              column[key] = value;
+                            }
+                          })
                       ]
-                  )
+                    )
+                  ]
+                )
               )
             )
           )
