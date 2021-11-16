@@ -1,5 +1,5 @@
-import { DictNameEnum, SysDict } from "../model/SysDict";
-import { Options } from "../model/FormModel";
+import { DictNameEnum, SysDict } from "../services/model/SysDict";
+import { Options } from "../services/model/FormModel";
 import { Constants } from "../constants/Constants";
 /*
  * TODO dictKey需要转Number()，待后端调整为Integer

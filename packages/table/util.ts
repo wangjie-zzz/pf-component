@@ -1,4 +1,4 @@
-import { off, on } from "../../src/components/util/dom-util";
+import { off, on } from "../util/dom-util";
 import { createPopper } from "@popperjs/core";
 import { AnyObject, TableColumnCtx } from "./table.type";
 import ResizeObserver from "resize-observer-polyfill";

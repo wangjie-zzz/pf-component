@@ -1,5 +1,5 @@
 import { getCurrentInstance, ref } from "vue";
-import { hasClass, addClass, removeClass } from "../../../src/components/util/dom-util";
+import { hasClass, addClass, removeClass } from "../../util/dom-util";
 import { isServer } from "../util";
 import { TableColumnCtx, Table } from "../table.type";
 import { TableHeaderProps } from "./table-header";

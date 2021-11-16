@@ -4,7 +4,7 @@
 // camelize(s: string)
 // Same as the return type
 import { camelize, isObject } from "@vue/shared";
-import { isServer } from "../../../packages/table/util";
+import { isServer } from "../table/util";
 
 /* istanbul ignore next */
 export const off = function(element: HTMLElement | Document | Window, event: string, handler: EventListenerOrEventListenerObject, useCapture = false): void {

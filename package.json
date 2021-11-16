@@ -1,6 +1,6 @@
 {
   "name": "pf-component",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "main": "lib/index.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
@@ -39,6 +39,8 @@
     "async-validator": "^3.4.0"
   },
   "files": [
-    "lib"
+    "lib",
+    "packages",
+    "src"
   ]
 }

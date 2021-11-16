@@ -1,4 +1,4 @@
-import { addClass, removeClass } from "../../../src/components/util/dom-util";
+import { addClass, removeClass } from "../../util/dom-util";
 import { defineComponent, getCurrentInstance, h, PropType, watch, onUnmounted } from "vue";
 import { hColgroup } from "../h-helper";
 import useLayoutObserver from "../layout-observer";

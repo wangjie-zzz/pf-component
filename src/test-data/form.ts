@@ -1,5 +1,5 @@
-import { FormFieldModel, FormModel, FormTypeEnum } from "../components/model/FormModel";
-import { isNull, isNullAndNotZero } from "@/components/util/objects-utils";
+import { FormFieldModel, FormModel, FormTypeEnum } from "../../packages/services/model/FormModel";
+import { isNull, isNullAndNotZero } from "../../packages/util/objects-utils";
 
 export const toFormValue = (form: FormModel, value?: any): any => {
   if (!value) {

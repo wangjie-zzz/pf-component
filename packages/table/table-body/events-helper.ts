@@ -1,5 +1,5 @@
 import { getCurrentInstance, ref, h } from "vue";
-import { getStyle, hasClass } from "../../../src/components/util/dom-util";
+import { getStyle, hasClass } from "../../util/dom-util";
 import { createTablePopper, getCell, getColumnByCell } from "../util";
 /*eslint-disable*/
 // @ts-ignore

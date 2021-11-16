@@ -16,7 +16,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, Ref } from "vue";
-import { FormModel } from "../src/components/model/FormModel";
+import { FormModel } from "../packages/services/model/FormModel";
 import { testForm, toFormValue } from "@/test-data/form";
 export default defineComponent({
   props: {},

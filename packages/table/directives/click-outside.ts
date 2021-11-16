@@ -1,6 +1,6 @@
 import { isServer } from "../util";
 import { ObjectDirective, ComponentPublicInstance, DirectiveBinding } from "vue";
-import { on } from "../../../src/components/util/dom-util";
+import { on } from "../../util/dom-util";
 
 type DocumentHandler = <T extends MouseEvent>(mouseup: T, mousedown: T) => void;
 

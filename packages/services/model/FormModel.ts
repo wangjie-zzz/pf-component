@@ -1,5 +1,5 @@
 import { RuleItem } from "async-validator";
-import { isNull } from "../util/objects-utils";
+import { isNull } from "../../util/objects-utils";
 import { DictNameEnum } from "./SysDict";
 
 export const FormTypeEnum = {
