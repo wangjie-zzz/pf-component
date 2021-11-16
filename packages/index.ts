@@ -3,7 +3,7 @@ import ElTableColumn from "./table/table-column";
 import ElTable from "./table/table.vue";
 import Form from "./form/form.vue";
 import PfTest from "./test/PfTest.vue";
-import { SysDict } from "./services/model/SysDict";
+import { SysDict } from "./services/model/Entity/SysDict";
 import { isNull } from "./util/objects-utils";
 import { useDict } from "./util/dict-convert";
 

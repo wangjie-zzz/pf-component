@@ -1,4 +1,4 @@
-import { DictNameEnum, SysDict } from "../services/model/SysDict";
+import { DictNameEnum, SysDict } from "../services/model/Entity/SysDict";
 import { Options } from "../services/model/FormModel";
 import { Constants } from "../constants/Constants";
 /*

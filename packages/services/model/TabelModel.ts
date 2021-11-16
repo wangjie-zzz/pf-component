@@ -1,4 +1,4 @@
-import { DictNameEnum } from "./SysDict";
+import { DictNameEnum } from "./Entity/SysDict";
 
 export const TableTypeEnum = {
   selection: { code: "selection", name: "" },

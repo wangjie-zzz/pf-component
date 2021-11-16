@@ -1,6 +1,6 @@
 import { RuleItem } from "async-validator";
 import { isNull } from "../../util/objects-utils";
-import { DictNameEnum } from "./SysDict";
+import { DictNameEnum } from "./Entity/SysDict";
 
 export const FormTypeEnum = {
   INPUT: { code: 1, name: "输入框" },
