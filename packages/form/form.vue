@@ -213,7 +213,7 @@ import { defineComponent, provide, watch, ref, computed, reactive, toRefs, toRef
 import mitt from "mitt";
 import { elFormKey, ElFormItemContext as FormItemCtx, elFormEvents, ValidateFieldCallback, ComponentSize } from "./token";
 import { FieldErrorList } from "async-validator";
-import { FormModel, FormTypeEnum } from "../../src/components/model/FormModel";
+// import { FormModel, FormTypeEnum } from "../../src/components/model/FormModel";
 import ElFormItem from "./form-item.vue";
 import { useDict } from "../../src/components/util/dict-convert";
 
@@ -269,7 +269,7 @@ export default defineComponent({
       }
     },
     config: {
-      type: FormModel,
+      type: Object,
       required: true,
       default: () => {
         return {};
@@ -289,6 +289,7 @@ export default defineComponent({
 
     formMitt.on<FormItemCtx>(elFormEvents.addField, field => {
       if (field) {
+        console.log(field);
         fields.push(field);
       }
     });
@@ -434,7 +435,18 @@ export default defineComponent({
       focusEvent,
       changeEvent,
       convertDict,
-      formTypes: FormTypeEnum,
+      formTypes: {
+        INPUT: { code: 1, name: "输入框" },
+        NUMBER: { code: 2, name: "数字框" },
+        SELECT: { code: 3, name: "下拉选择框" },
+        CHECKBOX: { code: 4, name: "多选框" },
+        RADIO: { code: 5, name: "单选框" },
+        TEXTAREA: { code: 6, name: "文本" },
+        DATE: { code: 7, name: "日期" },
+        TIME: { code: 8, name: "时间" },
+        DATETIME: { code: 9, name: "日期时间" },
+        CASCADER: { code: 10, name: "级联选择" }
+      },
       formValue
     };
   }

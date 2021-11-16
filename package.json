@@ -1,23 +1,20 @@
 {
   "name": "pf-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
     "build": "vue-cli-service build --mode prod",
-    "build:lib": "vue-cli-service build --target lib --name Pf --dest lib --filename index src/components/index.ts",
+    "build:lib": "vue-cli-service build --target lib --name Pf --dest lib --filename index packages/index.ts",
     "lint": "vue-cli-service lint"
   },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "dependencies": {
-    "animate.css": "^4.1.1",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.33",
-    "vue": "^3.0.0",
-    "vue-i18n": "^9.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0",
-    "jsencrypt": "^3.1.0",
-    "ts-md5": "^1.2.7"
+    "vue-i18n": "^9.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

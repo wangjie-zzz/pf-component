@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PfTest :title="'self-test: '"><span>i'm pf content </span></PfTest>
     <el-form
       class="pf-mb-50"
       :col-count="3"
