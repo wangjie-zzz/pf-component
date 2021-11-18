@@ -7,8 +7,6 @@ import { useHttpHeader } from "./useHttpHeader";
 import { useAuth } from "./useAuth";
 
 export const useHttpClient = () => {
-  const { createBasicHeaders, createAuthHeaders } = useHttpHeader();
-  const { authCode, refreshToken } = useAuth();
   const fetch0 = (path: string, method: MethodTypeEnum = MethodTypeEnum.GET, param: any, requestConfig: RequestInit): Promise<any> => {
     if (typeof param === "object") param = JSON.stringify(param);
     return fetch(path, {
@@ -22,6 +20,7 @@ export const useHttpClient = () => {
   };
 
   const general = <T>(api: ApiDetail, query?: any, params?: any): Promise<CommonResult<T>> => {
+    const { createBasicHeaders, createAuthHeaders } = useHttpHeader();
     if (!api) {
       return Promise.resolve({} as any);
     }
@@ -42,6 +41,8 @@ export const useHttpClient = () => {
   };
 
   const _fetch = <T>(path: string, method: MethodTypeEnum, requestConfig: RequestInit, query?: any, params?: any): Promise<T> => {
+    const { authCode, refreshToken } = useAuth();
+    const { createBasicHeaders, createAuthHeaders } = useHttpHeader();
     path = urlQueryConvert(path, query);
     return fetch0(path, method, params, requestConfig)
       .then(response => {
@@ -72,6 +73,7 @@ export const useHttpClient = () => {
   };
 
   const successHanlder = () => {
+    const { authCode, refreshToken } = useAuth();
     return (response: Response) => {
       // console.log(response);
       if (typeof response === "object") {

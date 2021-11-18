@@ -1,7 +1,6 @@
 import { useCache } from "./useCache";
 
 export const useHttpHeader = () => {
-  const { getToken, getUser } = useCache();
   const createBasicHeaders = (): RequestInit => {
     return {
       headers: {
@@ -12,6 +11,7 @@ export const useHttpHeader = () => {
   };
 
   const createAuthHeaders = (): RequestInit => {
+    const { getToken, getUser } = useCache();
     return {
       headers: {
         Authorization: "Bearer " + getToken(),

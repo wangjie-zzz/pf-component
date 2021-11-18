@@ -26,8 +26,8 @@ type TableServiceModel = {
   // info: Ref<any>;
 };
 export const useData = () => {
-  const { general } = useHttpClient();
   const loadDict = (fields: DictNameEnum[]): Promise<SysDict[]> => {
+    const { general } = useHttpClient();
     return general<SysDict[]>(systemApi.dictApi.cacheList, undefined, fields).then(response => {
       if (response.code === Constants.CODE.SUCCESS) {
         return Promise.resolve(response.data);
@@ -37,6 +37,7 @@ export const useData = () => {
     });
   };
   const loadForm = (forms: FormServiceModel[]): Promise<boolean> => {
+    const { general } = useHttpClient();
     if (isNull(forms)) return Promise.resolve(false);
     return general<SysFormInfo[]>(
       systemApi.formConfigApi.cacheList,
