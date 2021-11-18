@@ -1,9 +1,9 @@
 {
   "name": "pf-component",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "lib/index.umd.js",
   "style": "lib/index.css",
-  "typings": "types/index.d.ts",
+  "typings": "types/packages/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
     "build": "npm run build:tsc && npm run build:lib",

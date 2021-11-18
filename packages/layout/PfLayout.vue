@@ -2,7 +2,7 @@
   <div class="pf-flex pf-flex-column">
     <div class="pf-flex pf-top">
       <div class="pf-top-logo">
-        <img class="pf-vertical-middle" src="@/assets/images/logo.gif" />
+        <img class="pf-vertical-middle" :src="logoPath" />
       </div>
       <div class="pf-flex pf-flex-1 pf-ai-center pf-white">
         <div class="pf-flex-1">
@@ -33,11 +33,16 @@ import { defineComponent, ref, Ref, computed, inject } from "vue";
 import PfMenu from "../menu/PfMenu.vue";
 import { useMenu } from "../menu/useMenu";
 import { Crumb } from "../services/model/Crumb";
-import { SysMenu } from "../services/model/entity/SysMenu";
+import { SysMenu } from "../services/model/Entity/SysMenu";
 
 export default defineComponent({
   name: "PfLayout",
-  props: {},
+  props: {
+    logoPath: {
+      type: String,
+      default: ""
+    }
+  },
   emits: ["tab-click", "menu-click", "logout", "menu-open", "menu-close"],
   components: { PfMenu },
   setup(props, { emit }) {
