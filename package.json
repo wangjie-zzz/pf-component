@@ -2,9 +2,12 @@
   "name": "pf-component",
   "version": "0.0.5",
   "main": "lib/index.umd.js",
+  "style": "lib/index.css",
+  "typings": "types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
-    "build": "vue-cli-service build --mode prod",
+    "build": "npm run build:tsc && npm run build:lib",
+    "build:tsc": "tsc",
     "build:lib": "vue-cli-service build --target lib --name Pf --dest lib --filename index packages/index.ts",
     "lint": "vue-cli-service lint"
   },
@@ -40,7 +43,7 @@
   },
   "files": [
     "lib",
-    "packages",
+    "types",
     "src"
   ]
 }
