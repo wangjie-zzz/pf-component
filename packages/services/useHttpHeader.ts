@@ -1,26 +1,27 @@
-import { authService } from "./auth-service";
+import { useCache } from "./useCache";
 
-export class HeaderService {
-  createBasicHeaders(): RequestInit {
+export const useHttpHeader = () => {
+  const { getToken, getUser } = useCache();
+  const createBasicHeaders = (): RequestInit => {
     return {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       }
     };
-  }
+  };
 
-  createAuthHeaders(): RequestInit {
+  const createAuthHeaders = (): RequestInit => {
     return {
       headers: {
-        Authorization: "Bearer " + authService.getToken(),
+        Authorization: "Bearer " + getToken(),
         // eslint-disable-next-line @typescript-eslint/camelcase
-        user_identity: authService.getUser(),
+        user_identity: getUser(),
         "Content-Type": "application/json",
         Accept: "application/json"
       }
     };
-  }
+  };
 
   /*createFileDownloadAuthorizationHeader(): RequestInit {
     return {
@@ -32,4 +33,5 @@ export class HeaderService {
       responseType: "blob"
     };
   }*/
-}
+  return { createAuthHeaders, createBasicHeaders };
+};

@@ -9,6 +9,6 @@ import "@/assets/css/animate.min.css";
 import "@/assets/css/index.scss";
 
 const app = createApp(App);
-app.use(ElementPlus).use(Pf);
+app.use(ElementPlus).use(Pf.PF);
 i18nInstall(app);
 app.mount("#app");

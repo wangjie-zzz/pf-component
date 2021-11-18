@@ -1,13 +1,15 @@
 import { ApiDetail } from "./model/Api";
 import { CommonResult } from "./model/CommonResult";
 import { MethodTypeEnum } from "../constants/enum/method-type.enum";
-import { HeaderService } from "./header-service";
 import { HeaderTypeEnum } from "../constants/enum/header-type.enum";
 import { Constants } from "../constants/Constants";
-import { authService } from "./auth-service";
+import { useHttpHeader } from "./useHttpHeader";
+import { useAuth } from "./useAuth";
 
-export class ClientService extends HeaderService {
-  private fetch0(path: string, method: MethodTypeEnum = MethodTypeEnum.GET, param: any, requestConfig: RequestInit): Promise<any> {
+export const useHttpClient = () => {
+  const { createBasicHeaders, createAuthHeaders } = useHttpHeader();
+  const { authCode, refreshToken } = useAuth();
+  const fetch0 = (path: string, method: MethodTypeEnum = MethodTypeEnum.GET, param: any, requestConfig: RequestInit): Promise<any> => {
     if (typeof param === "object") param = JSON.stringify(param);
     return fetch(path, {
       method: method,
@@ -15,11 +17,11 @@ export class ClientService extends HeaderService {
       headers: requestConfig.headers,
       credentials: "include"
     })
-      .then(this.successHanlder())
-      .catch(this.errorHandler());
-  }
+      .then(successHanlder())
+      .catch(errorHandler());
+  };
 
-  general<T>(api: ApiDetail, query?: any, params?: any): Promise<CommonResult<T>> {
+  const general = <T>(api: ApiDetail, query?: any, params?: any): Promise<CommonResult<T>> => {
     if (!api) {
       return Promise.resolve({} as any);
     }
@@ -27,20 +29,21 @@ export class ClientService extends HeaderService {
     let requestConfig: RequestInit;
     switch (api.header) {
       case HeaderTypeEnum.BASE:
-        requestConfig = this.createBasicHeaders();
+        requestConfig = createBasicHeaders();
         break;
       case HeaderTypeEnum.AUTH:
-        requestConfig = this.createAuthHeaders();
+        requestConfig = createAuthHeaders();
         break;
       default:
-        requestConfig = this.createBasicHeaders();
+        requestConfig = createBasicHeaders();
     }
 
-    return this.fetch(path, api.method, requestConfig, query, params);
-  }
-  fetch<T>(path: string, method: MethodTypeEnum, requestConfig: RequestInit, query?: any, params?: any): Promise<T> {
-    path = this.urlQueryConvert(path, query);
-    return this.fetch0(path, method, params, requestConfig)
+    return _fetch(path, api.method, requestConfig, query, params);
+  };
+
+  const _fetch = <T>(path: string, method: MethodTypeEnum, requestConfig: RequestInit, query?: any, params?: any): Promise<T> => {
+    path = urlQueryConvert(path, query);
+    return fetch0(path, method, params, requestConfig)
       .then(response => {
         if (response.code) {
           // TODO 后端Long的序列化丢失精度问题导致code也返回了string，待优化
@@ -48,17 +51,17 @@ export class ClientService extends HeaderService {
         }
         if (response.code === Constants.CODE.INVALID_TOKEN) {
           console.warn("token已过期，刷新中...");
-          return authService.refreshToken().then((res: boolean) => {
+          return refreshToken().then((res: boolean) => {
             if (res) {
-              requestConfig = Object.assign(requestConfig, this.createAuthHeaders());
-              return this.fetch(path, method, requestConfig, undefined, params);
+              requestConfig = Object.assign(requestConfig, createAuthHeaders());
+              return _fetch(path, method, requestConfig, undefined, params);
             } else {
               return Promise.resolve(response);
             }
           });
         } else if (response.code === Constants.CODE.FORCE_LOGOUT) {
           // TODO 添加被踢出提示
-          authService.authCode();
+          authCode();
         } else {
           return Promise.resolve(response);
         }
@@ -66,9 +69,9 @@ export class ClientService extends HeaderService {
       .catch(error => {
         return Promise.resolve(error);
       });
-  }
+  };
 
-  private successHanlder() {
+  const successHanlder = () => {
     return (response: Response) => {
       // console.log(response);
       if (typeof response === "object") {
@@ -80,7 +83,7 @@ export class ClientService extends HeaderService {
           //TODO 添加sessionId异常提示
           /*response = Response {type: "basic", 
           url: "http://localhost:4200/xxxxxxxxxxxxx", redirected: false, status: 401, ok: false, …}*/
-          authService.authCode();
+          authCode();
         } else if (response.status === 503) {
           return { code: Constants.CODE.SERVER_FAIL, message: "请求服务响应异常" };
         }
@@ -88,16 +91,16 @@ export class ClientService extends HeaderService {
         return { code: Constants.CODE.SERVER_FAIL, message: "服务器响应异常" };
       }
     };
-  }
+  };
 
-  private errorHandler() {
+  const errorHandler = () => {
     return (error: any) => {
       // console.log(error === "TypeError: Failed to fetch");
       return { code: Constants.CODE.SERVER_FAIL, message: "服务器异常", data: error };
     };
-  }
+  };
 
-  jsonToFormData(params: any) {
+  const jsonToFormData = (params: any) => {
     if (params != null) {
       const formData = new FormData();
       Object.keys(params).forEach(key => {
@@ -105,9 +108,9 @@ export class ClientService extends HeaderService {
       });
       return formData;
     }
-  }
+  };
 
-  urlQueryConvert(url: string, query: any) {
+  const urlQueryConvert = (url: string, query: any): string => {
     if (query) {
       let connectiveSymbol = "";
       if (url.indexOf("?") !== -1) {
@@ -133,6 +136,6 @@ export class ClientService extends HeaderService {
       });
     }
     return url;
-  }
-}
-export const clientService = new ClientService();
+  };
+  return { _fetch, general, jsonToFormData, urlQueryConvert };
+};
