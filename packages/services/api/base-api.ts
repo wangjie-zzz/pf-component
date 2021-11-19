@@ -1,10 +1,8 @@
-import { isTrue } from "../../constants/enum/dicts/bool.enum";
-
 type ProjectUrlModel = {
   [key: string]: string;
 };
 export class BaseApi {
-  private projectUrl: ProjectUrlModel = { "pf-gateway": process.env.VUE_APP_BASE_URL };
+  protected projectUrl: ProjectUrlModel;
   protected baseUrl: string;
   prefix: string;
   permit: string;
@@ -12,14 +10,15 @@ export class BaseApi {
   enableGateway: boolean;
   enableProxy: boolean;
 
-  constructor(project: string, url: string) {
-    this.prefix = process.env.VUE_APP_API_PREFIX || "";
+  constructor(project: string, url: string, gatewayUrl: string, prefix: string, enableProxy?: boolean, enableGateway?: boolean) {
+    this.enableProxy = enableProxy || false; // 默认不开启代理
+    this.enableGateway = enableGateway || false; // 默认不开启网关
+    this.prefix = prefix;
     this.project = project;
+    this.projectUrl = { "pf-gateway": gatewayUrl };
     this.projectUrl[project] = url;
     this.permit = "/permitAll";
     this.baseUrl = "";
-    this.enableProxy = isTrue(process.env.VUE_APP_ENABLE_PROXY);
-    this.enableGateway = isTrue(process.env.VUE_APP_ENABLE_GATEWAY);
     this.initBaseUrl();
   }
   initBaseUrl(): void {

@@ -1,11 +1,11 @@
 import { useHttpClient } from "./useHttpClient";
-import { authApi } from "./api/auth-api";
 import { isNull } from "../util/objects-utils";
 import { Config } from "./Config";
 import { SysDict } from "./model/Entity/SysDict";
-import { systemApi } from "./api/system-api";
 import { useDict } from "..";
 import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
+import { SystemApi } from "./api/system-api";
+import { AuthApi } from "./api/auth-api";
 
 export const useAuth = () => {
   const TOKEN = "access_token";
@@ -17,7 +17,7 @@ export const useAuth = () => {
     sessionStorage.setItem(REFRESH_TOKEN, token.refreshToken);
     sessionStorage.setItem(USER, token.jti);
     useHttpClient()
-      .general<SysDict[]>(systemApi.dictApi.list)
+      .general<SysDict[]>(SystemApi.INSTANCE.dictApi.list)
       .then(response => {
         if (response.code === ResponseCodeEnum.SUCCESS) {
           useDict().setDict(response.data);
@@ -51,7 +51,7 @@ export const useAuth = () => {
 
   const logout = (): Promise<boolean> => {
     const { general, urlQueryConvert } = useHttpClient();
-    return general(authApi.oauthApi.logout).then(res => {
+    return general(AuthApi.INSTANCE.oauthApi.logout).then(res => {
       if (res.code === ResponseCodeEnum.SUCCESS) {
         clearCache();
         return Promise.resolve(true);
@@ -62,7 +62,7 @@ export const useAuth = () => {
   };
   const authCode = (): void => {
     const { general, urlQueryConvert } = useHttpClient();
-    const href = urlQueryConvert(authApi.oauthApi.authorize.url, Config.INSTANCE.getAuthCodeParams());
+    const href = urlQueryConvert(AuthApi.INSTANCE.oauthApi.authorize.url, Config.INSTANCE.getAuthCodeParams());
     location.href = href;
   };
   const token = (params: any): Promise<boolean> => {
@@ -70,7 +70,7 @@ export const useAuth = () => {
     if (isNull(params) || isNull(params.code)) {
       return Promise.resolve(false);
     }
-    return general(authApi.oauthApi.callback, undefined, {
+    return general(AuthApi.INSTANCE.oauthApi.callback, undefined, {
       ...Config.INSTANCE.getCallbackParams(),
       ...params
     }).then(res => {
@@ -87,7 +87,7 @@ export const useAuth = () => {
     const { general, urlQueryConvert } = useHttpClient();
     // eslint-disable-next-line @typescript-eslint/camelcase
     const params = { ...Config.INSTANCE.getCallbackParams(), refresh_token: getRefreshToken() };
-    return general(authApi.oauthApi.refreshToken, undefined, params).then(res => {
+    return general(AuthApi.INSTANCE.oauthApi.refreshToken, undefined, params).then(res => {
       setCache(res.data);
       return Promise.resolve(true);
     });

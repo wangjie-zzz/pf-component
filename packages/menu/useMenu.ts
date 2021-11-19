@@ -1,12 +1,12 @@
 import { SysMenu } from "../services/model/Entity/SysMenu";
-import { systemApi } from "../services/api/system-api";
 import { Crumb } from "../services/model/Crumb";
 import { useHttpClient } from "../services/useHttpClient";
 import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
+import { SystemApi } from "../services/api/system-api";
 export const useMenu = () => {
   const list = (): Promise<SysMenu[]> => {
     const { general } = useHttpClient();
-    return general<any[]>(systemApi.menuApi.list).then(res => {
+    return general<any[]>(SystemApi.INSTANCE.menuApi.list).then(res => {
       if (res.code === ResponseCodeEnum.SUCCESS) {
         return res.data;
       } else {

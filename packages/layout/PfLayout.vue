@@ -29,11 +29,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, computed, inject } from "vue";
+import { defineComponent, ref, Ref, computed, inject, toRefs } from "vue";
 import PfMenu from "../menu/PfMenu.vue";
 import { useMenu } from "../menu/useMenu";
 import { Crumb } from "../services/model/Crumb";
 import { SysMenu } from "../services/model/Entity/SysMenu";
+import { isNull } from "../util/objects-utils";
 
 export default defineComponent({
   name: "PfLayout",
@@ -41,16 +42,24 @@ export default defineComponent({
     logoPath: {
       type: String,
       default: ""
+    },
+    menuList: {
+      type: Array,
+      default: () => {
+        return [];
+      }
     }
   },
   emits: ["tab-click", "menu-click", "logout", "menu-open", "menu-close"],
   components: { PfMenu },
   setup(props, { emit }) {
     const { list } = useMenu();
-    let menus: SysMenu[] = [];
-    list().then(res => {
-      menus = res;
-    });
+    let menus: SysMenu[] = toRefs(props).menuList as any;
+    if (isNull(menus)) {
+      list().then(res => {
+        menus = res;
+      });
+    }
     const collapse: Ref<boolean> = ref(false);
     const crumbs: Crumb[] = inject("crumbs") || [];
     const activeCrumb = inject("activeCrumb");

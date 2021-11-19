@@ -4,7 +4,6 @@ import { TableColumnModel, TableModel } from "./model/TabelModel";
 import { FormNameEnum, SysFormInfo } from "./model/Entity/SysFormInfo";
 import { SysTableInfo, TableNameEnum } from "./model/Entity/SysTableInfo";
 import { isNull, isNullAndNotZero } from "../util/objects-utils";
-import { systemApi } from "./api/system-api";
 import { DictNameEnum, SysDict } from "./model/Entity/SysDict";
 import { SysFormField } from "./model/Entity/SysFormField";
 import { isTrue } from "../constants/enum/dicts/bool.enum";
@@ -14,6 +13,7 @@ import { DictNameEnums } from "../constants/enum/dict-name.enum";
 import { isNormal } from "../constants/enum/dicts/table-field-type.enum";
 import { useHttpClient } from "./useHttpClient";
 import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
+import { SystemApi } from "./api/system-api";
 
 type FormServiceModel = {
   name: FormNameEnum;
@@ -28,7 +28,7 @@ type TableServiceModel = {
 export const useData = () => {
   const loadDict = (fields: DictNameEnum[]): Promise<SysDict[]> => {
     const { general } = useHttpClient();
-    return general<SysDict[]>(systemApi.dictApi.cacheList, undefined, fields).then(response => {
+    return general<SysDict[]>(SystemApi.INSTANCE.dictApi.cacheList, undefined, fields).then(response => {
       if (response.code === ResponseCodeEnum.SUCCESS) {
         return Promise.resolve(response.data);
       } else {
@@ -40,7 +40,7 @@ export const useData = () => {
     const { general } = useHttpClient();
     if (isNull(forms)) return Promise.resolve(false);
     return general<SysFormInfo[]>(
-      systemApi.formConfigApi.cacheList,
+      SystemApi.INSTANCE.formConfigApi.cacheList,
       undefined,
       forms.map(form => form.name)
     ).then(response => {
@@ -70,7 +70,7 @@ export const useData = () => {
     if (isNull(tables)) return Promise.resolve(false);
     return useHttpClient()
       .general<SysTableInfo[]>(
-        systemApi.tableConfigApi.cacheList,
+        SystemApi.INSTANCE.tableConfigApi.cacheList,
         undefined,
         tables.map(table => table.name)
       )

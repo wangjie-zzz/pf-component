@@ -30,6 +30,8 @@ import { Crumb } from "./services/model/Crumb";
 import { Page } from "./services/model/Page";
 import { ResponseCodeEnum } from "./constants/enum/response-code.enum";
 import { BaseApi } from "./services/api/base-api";
+import { AuthApi } from "./services/api/auth-api";
+import { SystemApi } from "./services/api/system-api";
 export {
   useAuth,
   useDict,
@@ -73,6 +75,8 @@ export default {
   install(app: App, ops: ConfigOps): void {
     Config.INSTANCE.set(ops);
 
+    AuthApi.INSTANCE.initPf(ops.enableProxy, ops.enableGateway, ops.authPrefix);
+    SystemApi.INSTANCE.initPf(ops.enableProxy, ops.enableGateway, ops.systemPrefix);
     app.component(Form.name, Form);
     app.component(ElTable.name, ElTable);
     app.component(ElTableColumn.name, ElTableColumn);
