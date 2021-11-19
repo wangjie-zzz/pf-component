@@ -4,7 +4,7 @@ import { Constants } from "../constants/Constants";
 /*
  * TODO dictKey需要转Number()，待后端调整为Integer
  * */
-export function useDict() {
+export const useDict = () => {
   const setDict = (data: SysDict[]): void => {
     sessionStorage.setItem(Constants.CACHE_KEY.DICT, JSON.stringify(data));
   };
@@ -51,4 +51,4 @@ export function useDict() {
       });
   };
   return { setDict, getDict, convertDict, convertOptions, convertAllOptions };
-}
+};

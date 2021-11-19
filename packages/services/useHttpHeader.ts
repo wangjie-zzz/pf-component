@@ -1,4 +1,4 @@
-import { useCache } from "./useCache";
+import { useAuth } from "./useAuth";
 
 export const useHttpHeader = () => {
   const createBasicHeaders = (): RequestInit => {
@@ -11,12 +11,11 @@ export const useHttpHeader = () => {
   };
 
   const createAuthHeaders = (): RequestInit => {
-    const { getToken, getUser } = useCache();
     return {
       headers: {
-        Authorization: "Bearer " + getToken(),
+        Authorization: "Bearer " + useAuth().getToken(),
         // eslint-disable-next-line @typescript-eslint/camelcase
-        user_identity: getUser(),
+        user_identity: useAuth().getUser(),
         "Content-Type": "application/json",
         Accept: "application/json"
       }

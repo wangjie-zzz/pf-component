@@ -4,8 +4,8 @@ import { Constants } from "../constants/Constants";
 import { Crumb } from "../services/model/Crumb";
 import { useHttpClient } from "../services/useHttpClient";
 export const useMenu = () => {
-  const { general } = useHttpClient();
   const list = (): Promise<SysMenu[]> => {
+    const { general } = useHttpClient();
     return general<any[]>(systemApi.menuApi.list).then(res => {
       if (res.code === Constants.CODE.SUCCESS) {
         return res.data;

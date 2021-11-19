@@ -5,30 +5,67 @@ import Form from "./form/form.vue";
 import PfLayout from "./layout/PfLayout.vue";
 import PfMain from "./layout/PfMain.vue";
 import PfTest from "./test/PfTest.vue";
-import { SysDict } from "./services/model/Entity/SysDict";
-import { isNull } from "./util/objects-utils";
-import { useDict } from "./util/dict-convert";
 import { Config, ConfigOps } from "./services/Config";
 import { useAuth } from "./services/useAuth";
+import { useDict } from "./util/dict-convert";
 import { useHttpClient } from "./services/useHttpClient";
-import { useHttpHeader } from "./services/useHttpHeader";
 import { useData } from "./services/useData";
+import { useHttpHeader } from "./services/useHttpHeader";
 import { useMenu } from "./menu/useMenu";
-
-const PF = {
-  install(
-    app: App,
-    ops: {
-      dicts: SysDict[];
-      config: ConfigOps;
-    }
-  ): void {
-    if (!isNull(ops?.dicts)) {
-      useDict().setDict(ops.dicts);
-    } else {
-      useDict().setDict([]);
-    }
-    Config.INSTANCE.set(ops.config);
+import { TableModel, TableColumnModel, emptyTable } from "./services/model/TabelModel";
+import { emptyForm, FormFieldModel, FormModel, Options } from "./services/model/FormModel";
+import { DictNameEnum, SysDict } from "./services/model/Entity/SysDict";
+import { SysFormInfo } from "./services/model/Entity/SysFormInfo";
+import { SysFormField } from "./services/model/Entity/SysFormField";
+import { SysTableInfo } from "./services/model/Entity/SysTableInfo";
+import { SysTableField } from "./services/model/Entity/SysTableField";
+import { SysMenu } from "./services/model/Entity/SysMenu";
+import { Api, ApiDetail } from "./services/model/Api";
+import { MethodTypeEnum } from "./constants/enum/method-type.enum";
+import { MenuTypeEnum } from "./constants/enum/menu-type.enum";
+import { HeaderTypeEnum } from "./constants/enum/header-type.enum";
+import { isTrue } from "./constants/enum/dicts/bool.enum";
+import { isNormal } from "./constants/enum/dicts/table-field-type.enum";
+import { Constants } from "./constants/Constants";
+export {
+  useAuth,
+  useDict,
+  useHttpClient,
+  useHttpHeader,
+  useData,
+  useMenu,
+  /*模型*/
+  Api,
+  ApiDetail,
+  TableModel,
+  TableColumnModel,
+  emptyTable,
+  FormModel,
+  FormFieldModel,
+  emptyForm,
+  Options,
+  /*数据库实体*/
+  SysDict,
+  SysFormInfo,
+  SysFormField,
+  SysTableInfo,
+  SysTableField,
+  SysMenu,
+  /*枚举*/
+  MethodTypeEnum,
+  MenuTypeEnum,
+  HeaderTypeEnum,
+  DictNameEnum,
+  /*字典公共方法*/
+  isTrue,
+  isNormal,
+  /*公共方法*/
+  /*常量*/
+  Constants
+};
+export default {
+  install(app: App, ops: ConfigOps): void {
+    Config.INSTANCE.set(ops);
 
     app.component(Form.name, Form);
     app.component(ElTable.name, ElTable);
@@ -38,4 +75,3 @@ const PF = {
     app.component(PfMain.name, PfMain);
   }
 };
-export default { PF, useDict, useAuth, useHttpClient, useHttpHeader, useData, useMenu };
