@@ -1,15 +1,15 @@
 import { DictNameEnum, SysDict } from "../services/model/Entity/SysDict";
 import { Options } from "../services/model/FormModel";
-import { Constants } from "../constants/Constants";
 /*
  * TODO dictKey需要转Number()，待后端调整为Integer
  * */
 export const useDict = () => {
+  const DICT = "dict";
   const setDict = (data: SysDict[]): void => {
-    sessionStorage.setItem(Constants.CACHE_KEY.DICT, JSON.stringify(data));
+    sessionStorage.setItem(DICT, JSON.stringify(data));
   };
   const getDict = (): SysDict[] => {
-    const dictStr = sessionStorage.getItem(Constants.CACHE_KEY.DICT);
+    const dictStr = sessionStorage.getItem(DICT);
     if (dictStr) {
       const dicts = JSON.parse(dictStr);
       return dicts;

@@ -1,11 +1,11 @@
 import { useHttpClient } from "./useHttpClient";
 import { authApi } from "./api/auth-api";
 import { isNull } from "../util/objects-utils";
-import { Constants } from "../constants/Constants";
 import { Config } from "./Config";
 import { SysDict } from "./model/Entity/SysDict";
 import { systemApi } from "./api/system-api";
 import { useDict } from "..";
+import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
 
 export const useAuth = () => {
   const TOKEN = "access_token";
@@ -19,7 +19,7 @@ export const useAuth = () => {
     useHttpClient()
       .general<SysDict[]>(systemApi.dictApi.list)
       .then(response => {
-        if (response.code === Constants.CODE.SUCCESS) {
+        if (response.code === ResponseCodeEnum.SUCCESS) {
           useDict().setDict(response.data);
           return Promise.resolve(true);
         } else {
@@ -52,7 +52,7 @@ export const useAuth = () => {
   const logout = (): Promise<boolean> => {
     const { general, urlQueryConvert } = useHttpClient();
     return general(authApi.oauthApi.logout).then(res => {
-      if (res.code === Constants.CODE.SUCCESS) {
+      if (res.code === ResponseCodeEnum.SUCCESS) {
         clearCache();
         return Promise.resolve(true);
       } else {
@@ -75,7 +75,7 @@ export const useAuth = () => {
       ...params
     }).then(res => {
       console.log(res);
-      if (res.code === Constants.CODE.SUCCESS) {
+      if (res.code === ResponseCodeEnum.SUCCESS) {
         setCache(res.data);
         return Promise.resolve(true);
       } else {

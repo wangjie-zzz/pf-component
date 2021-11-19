@@ -26,7 +26,10 @@ import { MenuTypeEnum } from "./constants/enum/menu-type.enum";
 import { HeaderTypeEnum } from "./constants/enum/header-type.enum";
 import { isTrue } from "./constants/enum/dicts/bool.enum";
 import { isNormal } from "./constants/enum/dicts/table-field-type.enum";
-import { Constants } from "./constants/Constants";
+import { Crumb } from "./services/model/Crumb";
+import { Page } from "./services/model/Page";
+import { ResponseCodeEnum } from "./constants/enum/response-code.enum";
+import { BaseApi } from "./services/api/base-api";
 export {
   useAuth,
   useDict,
@@ -37,6 +40,7 @@ export {
   /*模型*/
   Api,
   ApiDetail,
+  BaseApi,
   TableModel,
   TableColumnModel,
   emptyTable,
@@ -44,6 +48,8 @@ export {
   FormFieldModel,
   emptyForm,
   Options,
+  Crumb,
+  Page,
   /*数据库实体*/
   SysDict,
   SysFormInfo,
@@ -56,12 +62,12 @@ export {
   MenuTypeEnum,
   HeaderTypeEnum,
   DictNameEnum,
+  ResponseCodeEnum,
   /*字典公共方法*/
   isTrue,
-  isNormal,
+  isNormal
   /*公共方法*/
   /*常量*/
-  Constants
 };
 export default {
   install(app: App, ops: ConfigOps): void {

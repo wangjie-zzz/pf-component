@@ -1,6 +1,6 @@
 <template>
   <template v-for="menu in menuList" :key="menu.menuId">
-    <el-submenu v-if="menu.children && menu.children.length" :index="menu.menuId" @open="open" @close="close">
+    <el-submenu v-if="menu.children && menu.children.length" :index="menu.menuId">
       <template v-slot:title>
         <i v-if="menu.menuIcon" :class="menu.menuIcon"></i>
         <span>{{ menu.menuName }}</span>
@@ -32,14 +32,10 @@ export default defineComponent({
   },
   emits: ["menuClick"],
   setup(prop, { emit }) {
-    const open = () => {};
-    const close = () => {};
     const menuClick = (e: SysMenu) => {
       emit("menuClick", e);
     };
     return {
-      open,
-      close,
       menuClick
     };
   }

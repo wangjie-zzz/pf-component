@@ -46,15 +46,11 @@ export default defineComponent({
   emits: ["tab-click", "menu-click", "logout", "menu-open", "menu-close"],
   components: { PfMenu },
   setup(props, { emit }) {
-    const { refreshCrumbs, list } = useMenu();
+    const { list } = useMenu();
     let menus: SysMenu[] = [];
     list().then(res => {
       menus = res;
     });
-    // 外部使用，刷新crumbs
-    const refreshCrumb = (fullPath: string, routeName: string, routeParams: any, routeMeta: any) => {
-      refreshCrumbs(fullPath, routeName, routeParams, routeMeta, crumbs, menus);
-    };
     const collapse: Ref<boolean> = ref(false);
     const crumbs: Crumb[] = inject("crumbs") || [];
     const activeCrumb = inject("activeCrumb");

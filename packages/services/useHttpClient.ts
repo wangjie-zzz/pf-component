@@ -2,9 +2,9 @@ import { ApiDetail } from "./model/Api";
 import { CommonResult } from "./model/CommonResult";
 import { MethodTypeEnum } from "../constants/enum/method-type.enum";
 import { HeaderTypeEnum } from "../constants/enum/header-type.enum";
-import { Constants } from "../constants/Constants";
 import { useHttpHeader } from "./useHttpHeader";
 import { useAuth } from "./useAuth";
+import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
 
 export const useHttpClient = () => {
   const fetch0 = (path: string, method: MethodTypeEnum = MethodTypeEnum.GET, param: any, requestConfig: RequestInit): Promise<any> => {
@@ -50,7 +50,7 @@ export const useHttpClient = () => {
           // TODO 后端Long的序列化丢失精度问题导致code也返回了string，待优化
           response.code = Number(response.code);
         }
-        if (response.code === Constants.CODE.INVALID_TOKEN) {
+        if (response.code === ResponseCodeEnum.INVALID_TOKEN) {
           console.warn("token已过期，刷新中...");
           return refreshToken().then((res: boolean) => {
             if (res) {
@@ -60,7 +60,7 @@ export const useHttpClient = () => {
               return Promise.resolve(response);
             }
           });
-        } else if (response.code === Constants.CODE.FORCE_LOGOUT) {
+        } else if (response.code === ResponseCodeEnum.FORCE_LOGOUT) {
           // TODO 添加被踢出提示
           authCode();
         } else {
@@ -87,10 +87,10 @@ export const useHttpClient = () => {
           url: "http://localhost:4200/xxxxxxxxxxxxx", redirected: false, status: 401, ok: false, …}*/
           authCode();
         } else if (response.status === 503) {
-          return { code: Constants.CODE.SERVER_FAIL, message: "请求服务响应异常" };
+          return { code: ResponseCodeEnum.SERVER_FAIL, message: "请求服务响应异常" };
         }
       } else {
-        return { code: Constants.CODE.SERVER_FAIL, message: "服务器响应异常" };
+        return { code: ResponseCodeEnum.SERVER_FAIL, message: "服务器响应异常" };
       }
     };
   };
@@ -98,7 +98,7 @@ export const useHttpClient = () => {
   const errorHandler = () => {
     return (error: any) => {
       // console.log(error === "TypeError: Failed to fetch");
-      return { code: Constants.CODE.SERVER_FAIL, message: "服务器异常", data: error };
+      return { code: ResponseCodeEnum.SERVER_FAIL, message: "服务器异常", data: error };
     };
   };
 

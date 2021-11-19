@@ -5,7 +5,6 @@ import { FormNameEnum, SysFormInfo } from "./model/Entity/SysFormInfo";
 import { SysTableInfo, TableNameEnum } from "./model/Entity/SysTableInfo";
 import { isNull, isNullAndNotZero } from "../util/objects-utils";
 import { systemApi } from "./api/system-api";
-import { Constants } from "../constants/Constants";
 import { DictNameEnum, SysDict } from "./model/Entity/SysDict";
 import { SysFormField } from "./model/Entity/SysFormField";
 import { isTrue } from "../constants/enum/dicts/bool.enum";
@@ -14,6 +13,7 @@ import { SysTableField } from "./model/Entity/SysTableField";
 import { DictNameEnums } from "../constants/enum/dict-name.enum";
 import { isNormal } from "../constants/enum/dicts/table-field-type.enum";
 import { useHttpClient } from "./useHttpClient";
+import { ResponseCodeEnum } from "../constants/enum/response-code.enum";
 
 type FormServiceModel = {
   name: FormNameEnum;
@@ -29,7 +29,7 @@ export const useData = () => {
   const loadDict = (fields: DictNameEnum[]): Promise<SysDict[]> => {
     const { general } = useHttpClient();
     return general<SysDict[]>(systemApi.dictApi.cacheList, undefined, fields).then(response => {
-      if (response.code === Constants.CODE.SUCCESS) {
+      if (response.code === ResponseCodeEnum.SUCCESS) {
         return Promise.resolve(response.data);
       } else {
         return Promise.resolve([]);
@@ -44,7 +44,7 @@ export const useData = () => {
       undefined,
       forms.map(form => form.name)
     ).then(response => {
-      if (response.code === Constants.CODE.SUCCESS) {
+      if (response.code === ResponseCodeEnum.SUCCESS) {
         if (!isNull(response.data)) {
           let res = true;
           forms.forEach(form => {
@@ -75,7 +75,7 @@ export const useData = () => {
         tables.map(table => table.name)
       )
       .then(response => {
-        if (response.code === Constants.CODE.SUCCESS) {
+        if (response.code === ResponseCodeEnum.SUCCESS) {
           if (!isNull(response.data)) {
             let res = true;
             tables.forEach(table => {
